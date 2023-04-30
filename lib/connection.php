@@ -1,15 +1,12 @@
+
 <?php
-
+$dns = ‘mysql:host=localhost;dbname=id20681932_students’;
+$user = ‘id20681932_studentssqlserver123’;
+$password = ‘atxjeQ)*klWvOd7kAdPO’;
 try{
-    $connection = new PDO ('mysql:host=localhost;dbname=id20681932_students	',
-    'id20681932_studentssqlserver123',
-    'atxjeQ)*klWvOd7kAdPO');
-    $connection ->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    echo 'yes Connected';
+ $db = new PDO ($dns, $user, $pass);
+}catch( PDOException $e){
+ $error = $e->getMessage();
+ echo $error;
 }
-catch(PDOException $exp){
-     echo $exp ->getMessage();
-     die ('could not connect');
-}
-
 ?>
