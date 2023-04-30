@@ -5,12 +5,10 @@ import 'package:sql_project/parent_detial.dart';
 import 'package:sql_project/select.dart';
 import 'package:sql_project/update.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const StudentApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StudentApp extends StatelessWidget {
+  const StudentApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +19,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
+        'homepage':(context) => const MyHomePage(),
         'enrollment' :(context) => const Enrollment(),
         'selection' :(context) => const SelectionPage(),
         'update' :(context) => const UpdatePage(),
         'parent' :(context) => const ParentDetials(),
       },
-      home: const MyHomePage(),
+      initialRoute: 'homepage',
     );
   }
 }
