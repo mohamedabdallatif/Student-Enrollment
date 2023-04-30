@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -8,6 +10,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+   Future getData() async{
+    var url = 'https://studentssqlserver123.000webhostapp.com/get.php';
+    var res = await http.get(Uri.parse(url),headers: {"Accept":"application/json"});
+    var reponseBody = json.decode(res.body);
+    print(reponseBody.toString());
+  }
+  @override
+  void initState() {
+       getData();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,3 +62,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
