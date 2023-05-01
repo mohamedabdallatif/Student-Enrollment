@@ -1,7 +1,13 @@
 <?php
 require_once('connection.php');
-$query = 'SELECT Id FROM student';
-$stm = $db->prepare($query);
-$stm->execute();
-$row = $stm->fetch(PDO::FETCH_ASSOC);
-echo json_encode($row);
+try
+{
+    $query_statement = "SELECT Id FROM student";
+    $query_response = $pdo->query($query_statement)->fetch(PDO::FETCH_ASSOC);
+    if($qres === true) json_encode($query_response);
+}
+catch(PDOException $e)
+{
+    echo $e->getMessage();
+}
+?>
