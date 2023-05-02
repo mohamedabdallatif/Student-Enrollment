@@ -1,23 +1,9 @@
-<?php
-require_once('connection.php');
-try
-{
-    $query_statement = "SELECT Id FROM student";
-    $query_response = $pdo->query($query_statement)->fetch(PDO::FETCH_ASSOC);
-    if($qres === true) json_encode($query_response);
-}
-catch(PDOException $e)
-{
-    echo $e->getMessage();
-}
-
-/*
-<?php
+ <?php
 // Replace these variables with your MySQL database credentials
 $host = 'localhost';
-$username = 'your_username';
-$password = 'your_password';
-$database = 'your_database';
+$username = 'id20681932_studentssqlserver123';
+$password = 'atxjeQ)*klWvOd7kAdPO';
+$database = 'id20681932_students';
 
 // Create a new MySQL connection
 $conn = mysqli_connect($host, $username, $password, $database);
@@ -40,6 +26,20 @@ echo json_encode($rows);
 
 // Close the MySQL connection
 mysqli_close($conn);
-?>
 
+/*
+require_once('connection.php');
+try
+{
+    $query_statement = "SELECT Id FROM student";
+    $query_response = $pdo->query($query_statement)->fetch(PDO::FETCH_ASSOC);
+    if($qres === true) json_encode($query_response);
+}
+catch(PDOException $e)
+{
+    echo $e->getMessage();
+} 
+?>
 */
+
+

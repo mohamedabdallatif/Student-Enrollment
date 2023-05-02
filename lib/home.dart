@@ -13,13 +13,12 @@ class _MyHomePageState extends State<MyHomePage> {
    Future getData() async{
     var url = 'https://studentssqlserver123.000webhostapp.com/get.php';
     var res = await http.get(Uri.parse(url));
-        if (res.statusCode == 200) {
     var reponseBody = json.decode(res.body);
     print(reponseBody.toString());
-        }
-        else {
+        
+      /*   else {
       throw Exception('Failed to load data from server.');
-    }
+    } */
   }
   @override
   void initState() {
