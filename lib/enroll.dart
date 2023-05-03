@@ -1,4 +1,4 @@
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 
@@ -10,8 +10,28 @@ class Enrollment extends StatefulWidget {
 }
 
 class _EnrollmentState extends State<Enrollment> {
-  var dateController = TextEditingController();
-  var gender = '';
+  String? _fname,
+      _lname,
+      _dateofbirth,
+      _address,
+      _religion,
+      _nationality,
+      _gender;
+
+  Future<int> insertStudent() async {
+    var query =
+        'fname=$_fname&lname=$_lname&dateofbirth=$_dateofbirth&address=$_address&religion=$_religion&nationality=$_nationality&gender=$_gender';
+    var url = 'https://studentssqlserver123.000webhostapp.com/insert.php';
+    http.Response res = await http.post(Uri.parse(url));
+    print(res.body);
+    return res.statusCode;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +46,12 @@ class _EnrollmentState extends State<Enrollment> {
           child: Form(
             child: Column(
               children: [
-                const Text('Student\'s Detials',
-                style: TextStyle(
-                  fontSize: 20
+                const Text(
+                  'Student\'s Detials',
+                  style: TextStyle(fontSize: 20),
                 ),
-                ),
-              const  SizedBox(
-                  height: 5,
+                const SizedBox(
+                  height: 15,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -47,6 +66,11 @@ class _EnrollmentState extends State<Enrollment> {
                       return 'First name can\'t be lesser than 2';
                     }
                     return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      _fname = value;
+                    });
                   },
                 ),
                 const SizedBox(
@@ -66,12 +90,16 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    setState(() {
+                      _lname = value;
+                    });
+                  },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  controller: dateController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Date Of Birth can\'t br empty';
@@ -85,7 +113,9 @@ class _EnrollmentState extends State<Enrollment> {
                             firstDate: DateTime.utc(1900),
                             lastDate: DateTime.now())
                         .then((value) {
-                      dateController.text = DateFormat.yMMMd().format(value!);
+                      setState(() {
+                        _dateofbirth = DateFormat.yMMMd().format(value!);
+                      });
                     });
                   },
                   keyboardType: TextInputType.none,
@@ -94,7 +124,7 @@ class _EnrollmentState extends State<Enrollment> {
                       prefixIcon: Icon(Icons.date_range),
                       border: OutlineInputBorder()),
                 ),
-              const SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
@@ -112,11 +142,16 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    setState(() {
+                      _address = value;
+                    });
+                  },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                 TextFormField(
+                TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       label: Text('Religion'),
@@ -131,8 +166,13 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    setState(() {
+                      _religion = value;
+                    });
+                  },
                 ),
-              const  SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
@@ -150,6 +190,11 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    setState(() {
+                      _nationality = value;
+                    });
+                  },
                 ),
                 const SizedBox(
                   height: 10,
@@ -157,46 +202,87 @@ class _EnrollmentState extends State<Enrollment> {
                 Container(
                   padding: const EdgeInsets.only(left: 10),
                   alignment: Alignment.topLeft,
-                  child: const Text('Gender',
-                  style: TextStyle(fontSize: 20),
+                  child: const Text(
+                    'Gender',
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
-               RadioListTile(
-                title: const Text('Male'),
-                value: 'male',
-                groupValue: gender,
-                contentPadding: EdgeInsets.zero,
-                 onChanged: (value){
-                  setState(() {
-                    gender = value.toString();
-                  });
-                 }
-                 ),
-                 RadioListTile(
-                title: const Text('Female'),
-                value: 'Female',
-                contentPadding: EdgeInsets.zero,
-                groupValue: gender,
-                 onChanged: (value){
-                  setState(() {
-                    gender = value.toString();
-                  });
-                 }
-                 ),
-
-                ElevatedButton(onPressed: (){
-                  Navigator.of(context).pushNamed('parent');
-                }, 
-                style: ButtonStyle(
-                  backgroundColor:MaterialStateProperty.all(Colors.teal)
-                ),
-                child: const Text('Next')
-                )
+                RadioListTile(
+                    title: const Text('Male'),
+                    value: 'Male',
+                    groupValue: _gender,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value;
+                      });
+                    }),
+                RadioListTile(
+                    title: const Text('Female'),
+                    value: 'Female',
+                    contentPadding: EdgeInsets.zero,
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value;
+                      });
+                    }),
+                ElevatedButton(
+                    onPressed: () async {
+                      // Navigator.of(context).pushNamed('parent');
+                      int responsecode = await insertStudent();
+                      if (responsecode == 200) {
+                        ShowAlterDialogMessage(
+                            context, 'Student Is Inserted Successfully');
+                      } else {
+                        ShowAlterDialogMessage(context,
+                            'Oops, Something Wrong within Inserting! Try Again');
+                      }
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.teal)),
+                    child: const Text('Enroll'))
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void ShowAlterDialogMessage(BuildContext context, String msg) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Enroll Confirmation'),
+        content: SizedBox(
+          height: 120,
+          child: Column(
+            children: [
+              const Divider(
+                color: Colors.grey,
+                thickness: 2,
+              ),
+              const SizedBox(height: 15),
+              Text(msg),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Text('Close!')),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
     );
   }
 }
