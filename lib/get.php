@@ -14,7 +14,7 @@ if (mysqli_connect_errno()) {
 }
 
 // Fetch data from MySQL database
-$sql = "SELECT * FROM your_table";
+$sql = "SELECT * FROM student";
 $result = mysqli_query($conn, $sql);
 
 // Convert the MySQL result into a JSON-encoded string
