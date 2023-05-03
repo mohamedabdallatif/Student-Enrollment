@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:sql_project/home.dart';
+import 'package:sql_project/student_detials.dart';
 
 class StudentData extends StatefulWidget {
   var val;
@@ -18,7 +19,7 @@ var count = 0;
 // List of maps
 //each row in table is map
 find(value, op) {
-  count=0;
+  count = 0;
   for (var element in reponseBody) {
     if (element['$op'] == value) {
       count++;
@@ -36,21 +37,70 @@ class _StudentDataState extends State<StudentData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Data')),
+      appBar: AppBar(
+        title: const Text('Data'),
+        backgroundColor: Colors.teal,
+      ),
       body: ListView.separated(
         itemCount: count,
         itemBuilder: (context, index) {
-          if(count ==0){
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          else{
-            for (var element in reponseBody) {
+          for (var element in reponseBody) {
             if (element['${widget.option}'] == widget.val) {
-              return Text('$element');
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Table(
+                  border: TableBorder.all(),
+                  children: [
+                    const TableRow(
+                      children: [
+                        TableCell(
+                          child: Text('ID'),
+                        ),
+                        TableCell(
+                          child: Text('First Name'),
+                        ),
+                        TableCell(
+                          child: Text('Last Name'),
+                        ),
+                        TableCell(
+                          child: Text('Phone'),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        TableCell(
+                          
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) =>  StudentDetials(element: element),
+                           )
+                           );
+                            },
+                            child: Text('${element['Id']}',
+                            style: const TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline
+                            ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Text('${element['First Name']}'),
+                        ),
+                        TableCell(
+                          child: Text('${element['Last Name']}'),
+                        ),
+                        TableCell(
+                          child: Text('${element['Phone']}'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
             }
-          }
           }
         },
         separatorBuilder: (BuildContext context, int index) {
@@ -60,7 +110,6 @@ class _StudentDataState extends State<StudentData> {
             color: Colors.grey[300],
           );
         },
-        
       ),
     );
   }
