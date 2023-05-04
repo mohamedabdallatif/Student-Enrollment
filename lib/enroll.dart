@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' hide TextDirection;
@@ -10,26 +12,40 @@ class Enrollment extends StatefulWidget {
 }
 
 class _EnrollmentState extends State<Enrollment> {
-  String? _fname,
-      _lname,
+  var fnamecontroller =TextEditingController();
+    var lnamecontroller =TextEditingController();
+    var gendercontroller =TextEditingController(),
       _dateofbirth,
       _address,
       _religion,
-      _nationality,
-      _gender;
+      _nationality;
+      var gender;
 
-  Future<int> insertStudent() async {
-    var query =
-        'fname=$_fname&lname=$_lname&dateofbirth=$_dateofbirth&address=$_address&religion=$_religion&nationality=$_nationality&gender=$_gender';
-    var url =
-        'https://studentssqlserver123.000webhostapp.com/insert.php?$query';
-    http.Response res = await http.post(Uri.parse(url));
-    print(res.body);
-    return res.statusCode;
+       var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
+
+  Future insertStudent(String fname,  String lname, var gender) async {
+  final response = await http.post(
+    Uri.parse(insertUrl),
+    body: {
+      'fname': fname,
+      'lname': lname,
+      'gender': gender,
+    },
+  );
+  if (response.statusCode == 200) {
+    final responseData = json.decode(response.body);
+    if (responseData['status'] == 'success') {
+      print('Data inserted successfully');
+    } else {
+      print('Error inserting data');
+    }
+  } else {
+    print('Error ${response.statusCode} ${response.reasonPhrase}');
   }
+}
 
   var dateController = TextEditingController();
-
+  
   @override
   void initState() {
     super.initState();
@@ -57,6 +73,7 @@ class _EnrollmentState extends State<Enrollment> {
                   height: 15,
                 ),
                 TextFormField(
+                  controller: fnamecontroller,
                   decoration: const InputDecoration(
                       label: Text('First name'),
                       prefixIcon: Icon(Icons.person),
@@ -70,16 +87,13 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      _fname = value;
-                    });
-                  },
+                 
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
+                  controller: lnamecontroller,
                   decoration: const InputDecoration(
                       label: Text('Last name'),
                       prefixIcon: Icon(Icons.person),
@@ -93,11 +107,7 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      _lname = value;
-                    });
-                  },
+                  
                 ),
                 const SizedBox(
                   height: 10,
@@ -212,26 +222,27 @@ class _EnrollmentState extends State<Enrollment> {
                 RadioListTile(
                     title: const Text('Male'),
                     value: 'Male',
-                    groupValue: _gender,
+                    groupValue: gender,
                     contentPadding: EdgeInsets.zero,
                     onChanged: (value) {
                       setState(() {
-                        _gender = value;
+                        gender = value;
                       });
                     }),
                 RadioListTile(
                     title: const Text('Female'),
                     value: 'Female',
                     contentPadding: EdgeInsets.zero,
-                    groupValue: _gender,
+                    groupValue: gender,
                     onChanged: (value) {
                       setState(() {
-                        _gender = value;
+                        gender = value;
                       });
                     }),
                 ElevatedButton(
                     onPressed: () async {
-                      int responsecode = await insertStudent();
+                      int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
+                      gender);
                       if (responsecode == 200) {
                         ShowAlterDialogMessage(
                             context, 'Student Is Inserted Successfully');
