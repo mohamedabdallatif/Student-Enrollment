@@ -15,9 +15,6 @@ class _MyHomePageState extends State<MyHomePage> {
     var res = await http.get(Uri.parse(url));
     reponseBody = json.decode(res.body);
     print(reponseBody.toString());
-      /*   else {
-      throw Exception('Failed to load data from server.');
-    } */
   }
   @override
   void initState() {

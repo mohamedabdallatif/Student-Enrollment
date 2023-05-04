@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sql_project/enroll.dart';
 import 'package:sql_project/home.dart';
-import 'package:sql_project/parent_detial.dart';
 import 'package:sql_project/select.dart';
 import 'package:sql_project/update.dart';
 
@@ -23,7 +22,6 @@ class StudentApp extends StatelessWidget {
         'enrollment' :(context) => const Enrollment(),
         'selection' :(context) => const SelectionPage(),
         'update' :(context) => const UpdatePage(),
-        'parent' :(context) => const ParentDetials(),
       },
       initialRoute: 'homepage',
     );

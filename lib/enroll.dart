@@ -21,7 +21,7 @@ class _EnrollmentState extends State<Enrollment> {
   Future<int> insertStudent() async {
     var query =
         'fname=$_fname&lname=$_lname&dateofbirth=$_dateofbirth&address=$_address&religion=$_religion&nationality=$_nationality&gender=$_gender';
-    var url = 'https://studentssqlserver123.000webhostapp.com/insert.php';
+    var url = 'https://studentssqlserver123.000webhostapp.com/insert.php?$query';
     http.Response res = await http.post(Uri.parse(url));
     print(res.body);
     return res.statusCode;
@@ -114,7 +114,7 @@ class _EnrollmentState extends State<Enrollment> {
                             lastDate: DateTime.now())
                         .then((value) {
                       setState(() {
-                        _dateofbirth = DateFormat.yMMMd().format(value!);
+                        _dateofbirth = DateFormat.yMd().format(value!);
                       });
                     });
                   },
@@ -229,7 +229,6 @@ class _EnrollmentState extends State<Enrollment> {
                     }),
                 ElevatedButton(
                     onPressed: () async {
-                      // Navigator.of(context).pushNamed('parent');
                       int responsecode = await insertStudent();
                       if (responsecode == 200) {
                         ShowAlterDialogMessage(
