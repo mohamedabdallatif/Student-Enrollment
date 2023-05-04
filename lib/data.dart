@@ -20,12 +20,12 @@ class StudentData extends StatefulWidget {
 }
 var url = 'https://studentssqlserver123.000webhostapp.com/select.php';
 Future<void> sendSelectStatementToPhp(var selectStatement,var val) async {
-  final response = await http.post(Uri.parse(url), body: {
-  //  'selectStatement': selectStatement,
+  final response = (await http.post(Uri.parse(url), body: {
+   'selectStatement': selectStatement,
     'val':val,
-  });
-  print('request is ====== ${response.request}');
+  }));
   print(response.body.toString());
+  
   if (response.statusCode == 200) {
     print('Select statement sent to PHP script successfully');
   } else {
@@ -33,17 +33,9 @@ Future<void> sendSelectStatementToPhp(var selectStatement,var val) async {
   }
 }
 
-var count = 0;
 // List of maps
 //each row in table is map
- find(value, op) {
-  count = 0;
-  for (var element in reponseBody) {
-    if (element['$op'] == value) {
-      count++;
-    }
-  }
-}
+ 
 
 class _StudentDataState extends State<StudentData> {
   @override
@@ -60,7 +52,7 @@ class _StudentDataState extends State<StudentData> {
         backgroundColor: Colors.teal,
       ),
       body: ListView.builder(
-        itemCount: 2,
+        itemCount:response ,
         itemBuilder: (context, index) {
           for (var element in reponseBody) {
          //   if (element['${widget.option}'] == widget.val) {

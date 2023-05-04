@@ -35,7 +35,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 selectedOption = newValue!;
               });
             },
-            items: <String>['Id','First Name', 'Last Name', 'Gender', 'Nationality','all']
+            items: <String>['Id','First_Name', 'Last_Name', 'Gender', 'Nationality','all']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
