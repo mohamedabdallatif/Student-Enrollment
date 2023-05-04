@@ -10,7 +10,7 @@ class SelectionPage extends StatefulWidget {
 
 class _SelectionPageState extends State<SelectionPage> {
   String selectedOption =
-      'First Name'; // This variable will hold the currently selected option
+      'Id'; // This variable will hold the currently selected option
   var formKey = GlobalKey<FormState>();
   var searchController = TextEditingController();
   @override
@@ -35,7 +35,7 @@ class _SelectionPageState extends State<SelectionPage> {
                 selectedOption = newValue!;
               });
             },
-            items: <String>['First Name', 'Last Name', 'Gender', 'Nationality']
+            items: <String>['Id','First Name', 'Last Name', 'Gender', 'Nationality','all']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -50,12 +50,14 @@ class _SelectionPageState extends State<SelectionPage> {
               child: TextFormField(
                 controller: searchController,
                 validator: (value) {
-                      if (value!.length > 100) {
+                     if(selectedOption!='all'){
+                        if (value!.length > 100) {
                         return 'Input can\'t be greater than 100';
                       }
-                      if (value.length < 2) {
+                      if (value.isEmpty) {
                         return 'Input can\'t be lesser than 2';
                       }
+                     }
                       return null;
                     },
               ),

@@ -18,7 +18,7 @@ class StudentData extends StatefulWidget {
 var count = 0;
 // List of maps
 //each row in table is map
-find(value, op) {
+ find(value, op) {
   count = 0;
   for (var element in reponseBody) {
     if (element['$op'] == value) {
@@ -30,7 +30,9 @@ find(value, op) {
 class _StudentDataState extends State<StudentData> {
   @override
   void initState() {
-    find(widget.val, widget.option);
+    /*  WidgetsBinding.instance.addPostFrameCallback((_) async{ 
+      await find(widget.val, widget.option);
+    }); */
     super.initState();
   }
 
@@ -41,8 +43,8 @@ class _StudentDataState extends State<StudentData> {
         title: const Text('Data'),
         backgroundColor: Colors.teal,
       ),
-      body: ListView.separated(
-        itemCount: count,
+      body: ListView.builder(
+        itemCount: find(widget.val, widget.option),
         itemBuilder: (context, index) {
           for (var element in reponseBody) {
             if (element['${widget.option}'] == widget.val) {
@@ -70,19 +72,20 @@ class _StudentDataState extends State<StudentData> {
                     TableRow(
                       children: [
                         TableCell(
-                          
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) =>  StudentDetials(element: element),
-                           )
-                           );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        StudentDetials(element: element),
+                                  ));
                             },
-                            child: Text('${element['Id']}',
-                            style: const TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline
-                            ),
+                            child: Text(
+                              '${element['Id']}',
+                              style: const TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline),
                             ),
                           ),
                         ),
@@ -102,13 +105,6 @@ class _StudentDataState extends State<StudentData> {
               );
             }
           }
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Container(
-            width: double.infinity,
-            height: 1.0,
-            color: Colors.grey[300],
-          );
         },
       ),
     );

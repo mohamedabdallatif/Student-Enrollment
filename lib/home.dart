@@ -13,8 +13,8 @@ class _MyHomePageState extends State<MyHomePage> {
    Future getData() async{
     var url = 'https://studentssqlserver123.000webhostapp.com/get.php';
     var res = await http.get(Uri.parse(url));
-     reponseBody = json.decode(res.body);
-   // print(reponseBody.toString());
+    reponseBody = json.decode(res.body);
+    print(reponseBody.toString());
       /*   else {
       throw Exception('Failed to load data from server.');
     } */
