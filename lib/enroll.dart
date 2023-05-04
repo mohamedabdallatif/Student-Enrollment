@@ -21,11 +21,14 @@ class _EnrollmentState extends State<Enrollment> {
   Future<int> insertStudent() async {
     var query =
         'fname=$_fname&lname=$_lname&dateofbirth=$_dateofbirth&address=$_address&religion=$_religion&nationality=$_nationality&gender=$_gender';
-    var url = 'https://studentssqlserver123.000webhostapp.com/insert.php?$query';
+    var url =
+        'https://studentssqlserver123.000webhostapp.com/insert.php?$query';
     http.Response res = await http.post(Uri.parse(url));
     print(res.body);
     return res.statusCode;
   }
+
+  var dateController = TextEditingController();
 
   @override
   void initState() {
@@ -100,6 +103,7 @@ class _EnrollmentState extends State<Enrollment> {
                   height: 10,
                 ),
                 TextFormField(
+                  controller: dateController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Date Of Birth can\'t br empty';
@@ -110,12 +114,10 @@ class _EnrollmentState extends State<Enrollment> {
                     showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime.utc(1900),
+                           firstDate: DateTime.utc(1900),
                             lastDate: DateTime.now())
                         .then((value) {
-                      setState(() {
-                        _dateofbirth = DateFormat.yMd().format(value!);
-                      });
+                      dateController.text = DateFormat.yMMMd().format(value!);
                     });
                   },
                   keyboardType: TextInputType.none,
