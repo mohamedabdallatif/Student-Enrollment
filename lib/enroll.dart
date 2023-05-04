@@ -12,14 +12,14 @@ class Enrollment extends StatefulWidget {
 }
 
 class _EnrollmentState extends State<Enrollment> {
-  var fnamecontroller =TextEditingController();
-  var lnamecontroller =TextEditingController();
-    var addresscontroller =TextEditingController();
-        var religioncontroller =TextEditingController();
-            var nationalitycontroller =TextEditingController();
-      var gender;
+  var fnamecontroller = TextEditingController();
+  var lnamecontroller = TextEditingController();
+  var addresscontroller = TextEditingController();
+  var religioncontroller = TextEditingController();
+  var nationalitycontroller = TextEditingController();
+  var gender;
 
-       var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
+  var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
 
   Future<void> insertStudent(String fname,String lname,String date,String Address,String religion,String nationality ,String gender) async {
   final response = await http.post(
@@ -39,15 +39,12 @@ class _EnrollmentState extends State<Enrollment> {
     if (responseData['status'] == 'success') {
       print('Data inserted successfully');
     } else {
-      print('Error inserting data');
+      print('Error ${response.statusCode} ${response.reasonPhrase}');
     }
-  } else {
-    print('Error ${response.statusCode} ${response.reasonPhrase}');
   }
-}
 
   var dateController = TextEditingController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -89,7 +86,6 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                 
                 ),
                 const SizedBox(
                   height: 10,
@@ -109,7 +105,6 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  
                 ),
                 const SizedBox(
                   height: 10,
@@ -126,7 +121,7 @@ class _EnrollmentState extends State<Enrollment> {
                     showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                           firstDate: DateTime.utc(1900),
+                            firstDate: DateTime.utc(1900),
                             lastDate: DateTime.now())
                         .then((value) {
                       dateController.text = value!.toIso8601String();
@@ -157,7 +152,6 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  
                 ),
                 const SizedBox(
                   height: 10,
@@ -178,7 +172,6 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  
                 ),
                 const SizedBox(
                   height: 10,
@@ -199,7 +192,6 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                 
                 ),
                 const SizedBox(
                   height: 10,
@@ -234,10 +226,20 @@ class _EnrollmentState extends State<Enrollment> {
                     }),
                 ElevatedButton(
                     onPressed: () async {
+<<<<<<< HEAD
                       await insertStudent(fnamecontroller.text, lnamecontroller.text,dateController.text,
                       addresscontroller.text,religioncontroller.text,nationalitycontroller.text ,gender);
+=======
+                      await insertStudent(
+                          fnamecontroller.text,
+                          lnamecontroller.text,
+                          addresscontroller.text,
+                          religioncontroller.text,
+                          nationalitycontroller.text,
+                          gender);
+>>>>>>> 9131dc1ce66bacb02e299860e2b67750c4b9e9e9
                       print('sucesssssssssssss');
-                     /*  int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
+                      /*  int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
                       gender);
                       if (responsecode == 200) {
                         ShowAlterDialogMessage(
