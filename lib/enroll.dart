@@ -21,28 +21,23 @@ class _EnrollmentState extends State<Enrollment> {
 
   var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
 
-  Future<void> insertStudent(String fname,String lname,String date,String Address,String religion,String nationality ,String gender) async {
-  final response = await http.post(
-    Uri.parse(insertUrl),
-    body: {
-      'fname': fname,
-      'lname': lname,
-      'date':date,
-      'Address':Address,
-      'religion':religion,
-      'nationality':nationality,
-      'gender': gender,
-    },
-  );
-  if (response.statusCode == 200) {
-    final responseData = json.decode(response.body);
-    if (responseData['status'] == 'success') {
-      print('Data inserted successfully');
-    } else {
-      print('Error ${response.statusCode} ${response.reasonPhrase}');
-    }
+  Future insertStudent(String fname, String lname, String date, String Address,
+      String religion, String nationality, String gender) async {
+    final response = await http.post(
+      Uri.parse(insertUrl),
+      body: {
+        'fname': fname,
+        'lname': lname,
+        'date': date,
+        'Address': Address,
+        'religion': religion,
+        'nationality': nationality,
+        'gender': gender,
+      },
+    );
+    return response;
   }
-  }
+
   var dateController = TextEditingController();
 
   @override
@@ -221,7 +216,7 @@ class _EnrollmentState extends State<Enrollment> {
                     }),
                 ElevatedButton(
                     onPressed: () async {
-                      await insertStudent(
+                      final result = await insertStudent(
                           fnamecontroller.text,
                           lnamecontroller.text,
                           dateController.text,
@@ -229,16 +224,16 @@ class _EnrollmentState extends State<Enrollment> {
                           religioncontroller.text,
                           nationalitycontroller.text,
                           gender);
-                      print('sucesssssssssssss');
-                      /*  int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
-                      gender);
-                      if (responsecode == 200) {
-                        ShowAlterDialogMessage(
-                            context, 'Student Is Inserted Successfully');
-                      } else {
-                        ShowAlterDialogMessage(context,
-                            'Oops, Something Wrong within Inserting! Try Again');
-                      } */
+                      if (result.statusCode == 200) {
+                        final responseData = json.decode(result.body);
+                        if (responseData['status'] == 'success') {
+                          print('Data inserted successfully');
+                          ShowAlterDialogMessage(context, 'Student Is Inserted Successfully');
+                        } else {
+                          ShowAlterDialogMessage(context,
+                            'Error ${result.statusCode} ${result.reasonPhrase}');
+                        }
+                      }
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -258,7 +253,7 @@ class _EnrollmentState extends State<Enrollment> {
       builder: (context) => AlertDialog(
         title: const Text('Enroll Confirmation'),
         content: SizedBox(
-          height: 100,
+          height: 130,
           child: Column(
             children: [
               const Divider(
@@ -287,4 +282,3 @@ class _EnrollmentState extends State<Enrollment> {
     );
   }
 }
-
