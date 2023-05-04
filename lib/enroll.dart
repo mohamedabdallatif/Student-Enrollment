@@ -21,12 +21,13 @@ class _EnrollmentState extends State<Enrollment> {
 
        var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
 
-  Future<void> insertStudent(String fname,String lname,String Address,String religion,String nationality ,String gender) async {
+  Future<void> insertStudent(String fname,String lname,String date,String Address,String religion,String nationality ,String gender) async {
   final response = await http.post(
     Uri.parse(insertUrl),
     body: {
       'fname': fname,
       'lname': lname,
+      'date':date,
       'Address':Address,
       'religion':religion,
       'nationality':nationality,
@@ -128,7 +129,7 @@ class _EnrollmentState extends State<Enrollment> {
                            firstDate: DateTime.utc(1900),
                             lastDate: DateTime.now())
                         .then((value) {
-                      dateController.text = DateFormat.yMMMd().format(value!);
+                      dateController.text = value!.toIso8601String();
                     });
                   },
                   keyboardType: TextInputType.none,
@@ -233,7 +234,7 @@ class _EnrollmentState extends State<Enrollment> {
                     }),
                 ElevatedButton(
                     onPressed: () async {
-                      await insertStudent(fnamecontroller.text, lnamecontroller.text,
+                      await insertStudent(fnamecontroller.text, lnamecontroller.text,dateController.text,
                       addresscontroller.text,religioncontroller.text,nationalitycontroller.text ,gender);
                       print('sucesssssssssssss');
                      /*  int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
