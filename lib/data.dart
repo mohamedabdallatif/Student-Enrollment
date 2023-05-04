@@ -30,9 +30,8 @@ var count = 0;
 class _StudentDataState extends State<StudentData> {
   @override
   void initState() {
-    /*  WidgetsBinding.instance.addPostFrameCallback((_) async{ 
-      await find(widget.val, widget.option);
-    }); */
+       find(widget.val, widget.option);
+    
     super.initState();
   }
 
@@ -44,7 +43,7 @@ class _StudentDataState extends State<StudentData> {
         backgroundColor: Colors.teal,
       ),
       body: ListView.builder(
-        itemCount: find(widget.val, widget.option),
+        itemCount: count,
         itemBuilder: (context, index) {
           for (var element in reponseBody) {
             if (element['${widget.option}'] == widget.val) {
