@@ -30,8 +30,7 @@ var count = 0;
 class _StudentDataState extends State<StudentData> {
   @override
   void initState() {
-       find(widget.val, widget.option);
-    
+    find(widget.val, widget.option);
     super.initState();
   }
 
@@ -43,10 +42,10 @@ class _StudentDataState extends State<StudentData> {
         backgroundColor: Colors.teal,
       ),
       body: ListView.builder(
-        itemCount: count,
+    //    itemCount: count,
         itemBuilder: (context, index) {
           for (var element in reponseBody) {
-            if (element['${widget.option}'] == widget.val) {
+         //   if (element['${widget.option}'] == widget.val) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Table(
@@ -102,8 +101,8 @@ class _StudentDataState extends State<StudentData> {
                   ],
                 ),
               );
-            }
-          }
+           // }
+         }
         },
       ),
     );

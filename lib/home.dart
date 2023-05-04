@@ -8,7 +8,7 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-var reponseBody;
+List reponseBody=[];
 class _MyHomePageState extends State<MyHomePage> {
    Future getData() async{
     var url = 'https://studentssqlserver123.000webhostapp.com/get.php';
