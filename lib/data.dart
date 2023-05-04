@@ -19,18 +19,22 @@ class StudentData extends StatefulWidget {
   State<StudentData> createState() => _StudentDataState();
 }
 var url = 'https://studentssqlserver123.000webhostapp.com/select.php';
-Future<void> sendSelectStatementToPhp(var selectStatement,var val) async {
+List<dynamic> jsonResponse=[];
+Future<List> sendSelectStatementToPhp(var selectStatement,var val) async {
   final response = (await http.post(Uri.parse(url), body: {
    'selectStatement': selectStatement,
     'val':val,
   }));
-  print(response.body.toString());
+  final responseBody = utf8.decode(response.bodyBytes);
+   jsonResponse = json.decode(responseBody);
+  //print(jsonResponse.toString());
   
   if (response.statusCode == 200) {
     print('Select statement sent to PHP script successfully');
   } else {
     print('Error sending select statement to PHP script');
   }
+  return jsonResponse;
 }
 
 // List of maps
@@ -51,70 +55,34 @@ class _StudentDataState extends State<StudentData> {
         title: const Text('Data'),
         backgroundColor: Colors.teal,
       ),
-      body: ListView.builder(
-        itemCount:response ,
-        itemBuilder: (context, index) {
-          for (var element in reponseBody) {
-         //   if (element['${widget.option}'] == widget.val) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Table(
-                  border: TableBorder.all(),
-                  children: [
-                    const TableRow(
-                      children: [
-                        TableCell(
-                          child: Text('ID'),
-                        ),
-                        TableCell(
-                          child: Text('First Name'),
-                        ),
-                        TableCell(
-                          child: Text('Last Name'),
-                        ),
-                        TableCell(
-                          child: Text('Phone'),
-                        ),
-                      ],
-                    ),
-                    TableRow(
-                      children: [
-                        TableCell(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        StudentDetials(element: element),
-                                  ));
-                            },
-                            child: Text(
-                              '${element['Id']}',
-                              style: const TextStyle(
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Text('${element['First Name']}'),
-                        ),
-                        TableCell(
-                          child: Text('${element['Last Name']}'),
-                        ),
-                        TableCell(
-                          child: Text('${element['Phone']}'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-           // }
-         }
+      body: FutureBuilder(
+        future: sendSelectStatementToPhp(widget.option, widget.val),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState==ConnectionState.waiting){
+            return const Center(child: CircularProgressIndicator(),);
+          }
+          else if(snapshot.connectionState==ConnectionState.done){
+            if(snapshot.hasData){
+              print('${snapshot.data}');
+              return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (context,index){
+                  return ListTile(
+                    title: Text('ID:${snapshot.data?[index]['Id']}'),
+                    subtitle: Text('Name:${snapshot.data?[index]['First_Name']} ${snapshot.data?[index]['Last_Name']}'),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder:(context){
+                      return  StudentDetials(element: snapshot.data?[index],);
+                      } ));
+                    },
+                  );
+                }
+                );
+            }
+          }
+          return Text('');
         },
-      ),
+      )
     );
   }
 }

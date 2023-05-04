@@ -29,7 +29,7 @@ class _StudentDetialsState extends State<StudentDetials> {
         fontWeight: FontWeight.bold,
           ),
           ),
-          Text('Name: ${widget.element['First Name']} ${widget.element['Last Name']}',
+          Text('Name: ${widget.element['First_Name']} ${widget.element['Last_Name']}',
         style: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w200,
@@ -41,7 +41,7 @@ class _StudentDetialsState extends State<StudentDetials> {
         fontWeight: FontWeight.w200,
       ),
       ) ,
-      const Text('Parent\'s Detials',
+      const Text('Courses\'s Detials',
           style: TextStyle(
             fontSize: 25,
         fontWeight: FontWeight.bold,
