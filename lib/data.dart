@@ -1,7 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sql_project/home.dart';
 import 'package:sql_project/student_detials.dart';
+import 'package:http/http.dart' as http;
+
 
 class StudentData extends StatefulWidget {
   var val;
@@ -13,6 +17,20 @@ class StudentData extends StatefulWidget {
   }) : super(key: key);
   @override
   State<StudentData> createState() => _StudentDataState();
+}
+var url = 'https://studentssqlserver123.000webhostapp.com/select.php';
+Future<void> sendSelectStatementToPhp(var selectStatement,var val) async {
+  final response = await http.post(Uri.parse(url), body: {
+  //  'selectStatement': selectStatement,
+    'val':val,
+  });
+  print('request is ====== ${response.request}');
+  print(response.body.toString());
+  if (response.statusCode == 200) {
+    print('Select statement sent to PHP script successfully');
+  } else {
+    print('Error sending select statement to PHP script');
+  }
 }
 
 var count = 0;
@@ -30,7 +48,7 @@ var count = 0;
 class _StudentDataState extends State<StudentData> {
   @override
   void initState() {
-    find(widget.val, widget.option);
+    sendSelectStatementToPhp(widget.option, widget.val);
     super.initState();
   }
 
@@ -42,7 +60,7 @@ class _StudentDataState extends State<StudentData> {
         backgroundColor: Colors.teal,
       ),
       body: ListView.builder(
-    //    itemCount: count,
+        itemCount: 2,
         itemBuilder: (context, index) {
           for (var element in reponseBody) {
          //   if (element['${widget.option}'] == widget.val) {
