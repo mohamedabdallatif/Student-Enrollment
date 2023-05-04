@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sql_project/home.dart';
 import 'package:sql_project/student_detials.dart';
 import 'package:http/http.dart' as http;
+import 'package:sql_project/update.dart';
 
 
 class StudentData extends StatefulWidget {
@@ -75,12 +76,18 @@ class _StudentDataState extends State<StudentData> {
                       return  StudentDetials(element: snapshot.data?[index],);
                       } ));
                     },
+                    trailing: IconButton(icon:const Icon(Icons.update) ,
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return UpdatePage(element: snapshot.data?[index],);
+                      }));
+                    },),
                   );
                 }
                 );
             }
           }
-          return Text('');
+          return const Text('');
         },
       )
     );

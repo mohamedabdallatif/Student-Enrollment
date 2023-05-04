@@ -21,7 +21,6 @@ class StudentApp extends StatelessWidget {
         'homepage':(context) => const MyHomePage(),
         'enrollment' :(context) => const Enrollment(),
         'selection' :(context) => const SelectionPage(),
-        'update' :(context) => const UpdatePage(),
       },
       initialRoute: 'homepage',
     );
