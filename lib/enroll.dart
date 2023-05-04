@@ -13,22 +13,23 @@ class Enrollment extends StatefulWidget {
 
 class _EnrollmentState extends State<Enrollment> {
   var fnamecontroller =TextEditingController();
-    var lnamecontroller =TextEditingController();
-    var gendercontroller =TextEditingController(),
-      _dateofbirth,
-      _address,
-      _religion,
-      _nationality;
+  var lnamecontroller =TextEditingController();
+    var addresscontroller =TextEditingController();
+        var religioncontroller =TextEditingController();
+            var nationalitycontroller =TextEditingController();
       var gender;
 
        var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
 
-  Future insertStudent(String fname,  String lname, var gender) async {
+  Future<void> insertStudent(String fname,String lname,String Address,String religion,String nationality ,String gender) async {
   final response = await http.post(
     Uri.parse(insertUrl),
     body: {
       'fname': fname,
       'lname': lname,
+      'Address':Address,
+      'religion':religion,
+      'nationality':nationality,
       'gender': gender,
     },
   );
@@ -140,6 +141,7 @@ class _EnrollmentState extends State<Enrollment> {
                   height: 10,
                 ),
                 TextFormField(
+                  controller: addresscontroller,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       label: Text('Address'),
@@ -154,16 +156,13 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      _address = value;
-                    });
-                  },
+                  
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
+                  controller: religioncontroller,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       label: Text('Religion'),
@@ -178,16 +177,13 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      _religion = value;
-                    });
-                  },
+                  
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
+                  controller: nationalitycontroller,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       label: Text('Nationality'),
@@ -202,11 +198,7 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    setState(() {
-                      _nationality = value;
-                    });
-                  },
+                 
                 ),
                 const SizedBox(
                   height: 10,
@@ -241,7 +233,10 @@ class _EnrollmentState extends State<Enrollment> {
                     }),
                 ElevatedButton(
                     onPressed: () async {
-                      int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
+                      await insertStudent(fnamecontroller.text, lnamecontroller.text,
+                      addresscontroller.text,religioncontroller.text,nationalitycontroller.text ,gender);
+                      print('sucesssssssssssss');
+                     /*  int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
                       gender);
                       if (responsecode == 200) {
                         ShowAlterDialogMessage(
@@ -249,7 +244,7 @@ class _EnrollmentState extends State<Enrollment> {
                       } else {
                         ShowAlterDialogMessage(context,
                             'Oops, Something Wrong within Inserting! Try Again');
-                      }
+                      } */
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -269,7 +264,7 @@ class _EnrollmentState extends State<Enrollment> {
       builder: (context) => AlertDialog(
         title: const Text('Enroll Confirmation'),
         content: SizedBox(
-          height: 120,
+          height: 100,
           child: Column(
             children: [
               const Divider(
