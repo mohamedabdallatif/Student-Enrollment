@@ -42,13 +42,8 @@ class _EnrollmentState extends State<Enrollment> {
       print('Error ${response.statusCode} ${response.reasonPhrase}');
     }
   }
-
-  var dateController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
   }
+  var dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +206,7 @@ class _EnrollmentState extends State<Enrollment> {
                     contentPadding: EdgeInsets.zero,
                     onChanged: (value) {
                       setState(() {
-                        gender = value;
+                        gender = value!;
                       });
                     }),
                 RadioListTile(
@@ -221,23 +216,19 @@ class _EnrollmentState extends State<Enrollment> {
                     groupValue: gender,
                     onChanged: (value) {
                       setState(() {
-                        gender = value;
+                        gender = value!;
                       });
                     }),
                 ElevatedButton(
                     onPressed: () async {
-<<<<<<< HEAD
-                      await insertStudent(fnamecontroller.text, lnamecontroller.text,dateController.text,
-                      addresscontroller.text,religioncontroller.text,nationalitycontroller.text ,gender);
-=======
                       await insertStudent(
                           fnamecontroller.text,
                           lnamecontroller.text,
+                          dateController.text,
                           addresscontroller.text,
                           religioncontroller.text,
                           nationalitycontroller.text,
                           gender);
->>>>>>> 9131dc1ce66bacb02e299860e2b67750c4b9e9e9
                       print('sucesssssssssssss');
                       /*  int responsecode = await insertStudent(fnamecontroller.text,lnamecontroller.text,
                       gender);
@@ -296,3 +287,4 @@ class _EnrollmentState extends State<Enrollment> {
     );
   }
 }
+
