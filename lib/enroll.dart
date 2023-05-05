@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' hide TextDirection;
 import 'package:sql_project/courses_page.dart';
 
 class Enrollment extends StatefulWidget {
@@ -201,7 +200,6 @@ class _EnrollmentState extends State<Enrollment> {
                         return  CoursePage(
                           fnamecontroller: fnamecontroller.text,
                           lnamecontroller: lnamecontroller.text,
-
                           addresscontroller:addresscontroller.text ,
                           dateController: dateController.text,
                           religioncontroller: religioncontroller.text,

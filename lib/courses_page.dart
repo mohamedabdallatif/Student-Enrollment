@@ -38,20 +38,21 @@ class _CoursePageState extends State<CoursePage> {
   Future insertStudent(String fname, String lname, String date, String Address,
       String religion, String nationality, String gender,List list) async {
         Map data= {
-        'fname': fname,
+        'kist':list
+   };
+    String body = json.encode(data);
+    final response = await http.post(
+      Uri.parse(insertUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: {'fname': fname,
         'lname': lname,
         'date': date,
         'Address': Address,
         'religion': religion,
         'nationality': nationality,
         'gender': gender,
-        'list':list
-   };
-     String body = json.encode(data);
-    final response = await http.post(
-      Uri.parse(insertUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: body
+        'list':body
+      }
     );
     return response;
   }
@@ -88,6 +89,7 @@ class _CoursePageState extends State<CoursePage> {
                   }),
             ),
             ElevatedButton(onPressed: ()async{
+              print(widget.fnamecontroller);
                final result = await insertStudent(
                           widget.fnamecontroller,
                           widget.lnamecontroller,
