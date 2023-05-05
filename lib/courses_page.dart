@@ -37,21 +37,20 @@ class _CoursePageState extends State<CoursePage> {
 
   Future insertStudent(String fname, String lname, String date, String Address,
       String religion, String nationality, String gender,List list) async {
-        Map data= {
-        'kist':list
-   };
-    String body = json.encode(data);
+        
+    // String body = json.encode(data);
     final response = await http.post(
       Uri.parse(insertUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: {'fname': fname,
+   //   headers: {'Content-Type': 'application/json'},
+      body: {
+        'fname': fname,
         'lname': lname,
         'date': date,
         'Address': Address,
         'religion': religion,
         'nationality': nationality,
         'gender': gender,
-        'list':body
+        'list':list.toString()
       }
     );
     return response;
