@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' hide TextDirection;
+import 'package:sql_project/courses_page.dart';
 
 class Enrollment extends StatefulWidget {
   const Enrollment({super.key});
@@ -10,35 +11,18 @@ class Enrollment extends StatefulWidget {
   @override
   State<Enrollment> createState() => _EnrollmentState();
 }
-
-class _EnrollmentState extends State<Enrollment> {
-  var fnamecontroller = TextEditingController();
+ var fnamecontroller = TextEditingController();
   var lnamecontroller = TextEditingController();
   var addresscontroller = TextEditingController();
   var religioncontroller = TextEditingController();
   var nationalitycontroller = TextEditingController();
   var gender;
 
-  var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
-
-  Future insertStudent(String fname, String lname, String date, String Address,
-      String religion, String nationality, String gender) async {
-    final response = await http.post(
-      Uri.parse(insertUrl),
-      body: {
-        'fname': fname,
-        'lname': lname,
-        'date': date,
-        'Address': Address,
-        'religion': religion,
-        'nationality': nationality,
-        'gender': gender,
-      },
-    );
-    return response;
-  }
-
+   
+  
   var dateController = TextEditingController();
+class _EnrollmentState extends State<Enrollment> {
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -216,24 +200,10 @@ class _EnrollmentState extends State<Enrollment> {
                     }),
                 ElevatedButton(
                     onPressed: () async {
-                      final result = await insertStudent(
-                          fnamecontroller.text,
-                          lnamecontroller.text,
-                          dateController.text,
-                          addresscontroller.text,
-                          religioncontroller.text,
-                          nationalitycontroller.text,
-                          gender);
-                      if (result.statusCode == 200) {
-                        final responseData = json.decode(result.body);
-                        if (responseData['status'] == 'success') {
-                          print('Data inserted successfully');
-                          ShowAlterDialogMessage(context, 'Student Is Inserted Successfully');
-                        } else {
-                          ShowAlterDialogMessage(context,
-                            'Error ${result.statusCode} ${result.reasonPhrase}');
-                        }
-                      }
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return const CoursePage();
+                      }));
+                     
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -247,7 +217,9 @@ class _EnrollmentState extends State<Enrollment> {
     );
   }
 
-  void ShowAlterDialogMessage(BuildContext context, String msg) {
+  
+}
+void ShowAlterDialogMessage(BuildContext context, String msg) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -281,4 +253,3 @@ class _EnrollmentState extends State<Enrollment> {
       barrierDismissible: false,
     );
   }
-}

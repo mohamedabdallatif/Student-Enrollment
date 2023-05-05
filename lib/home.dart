@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -8,46 +6,52 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-List reponseBody=[];
 class _MyHomePageState extends State<MyHomePage> {
-   Future getData() async{
-    var url = 'https://studentssqlserver123.000webhostapp.com/get.php';
-    var res = await http.get(Uri.parse(url));
-    reponseBody = json.decode(res.body);
-    print(reponseBody.toString());
-  }
-  @override
-  void initState() {
-  //  getData();
-    super.initState();
-  }
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Student Enrollment'),
         centerTitle: true,
         backgroundColor: Colors.teal,
       ),
-      body:Center(
+      body:Container(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+        mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch, 
+            children: [
             ElevatedButton(onPressed:(){
               Navigator.of(context).pushNamed('enrollment');
             } ,
-             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.teal)
+             style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.teal,
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                )),
+             child:const Text('Enroll new student',
+              style: TextStyle(fontSize: 18.0),
              ),
-             child:const Text('Enroll new student'),
+              ),
+            const SizedBox(
+                height: 16,
               ),
             ElevatedButton(onPressed:(){
               Navigator.of(context).pushNamed('selection');
             } ,
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.teal)
-             ),
-             child:const Text('Update Student')
+           style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.teal,
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                )),
+             child:const Text('Search for a Student',
+             style: TextStyle(fontSize: 16.0),
+             )
               ),
           ],
         ),

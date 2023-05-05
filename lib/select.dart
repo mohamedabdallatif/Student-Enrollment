@@ -9,7 +9,7 @@ class SelectionPage extends StatefulWidget {
 }
 
 class _SelectionPageState extends State<SelectionPage> {
-  String selectedOption = 'First_Name';
+  String selectedOption = 'Id';
   var formKey = GlobalKey<FormState>();
   var searchController = TextEditingController();
   @override
@@ -43,6 +43,7 @@ class _SelectionPageState extends State<SelectionPage> {
                     });
                   },
                   items: <String>[
+                    'Id',
                     'First_Name',
                     'Last_Name',
                     'Address',
