@@ -11,18 +11,15 @@ class Enrollment extends StatefulWidget {
   @override
   State<Enrollment> createState() => _EnrollmentState();
 }
- var fnamecontroller = TextEditingController();
+
+class _EnrollmentState extends State<Enrollment> {
+  var fnamecontroller = TextEditingController();
   var lnamecontroller = TextEditingController();
   var addresscontroller = TextEditingController();
   var religioncontroller = TextEditingController();
   var nationalitycontroller = TextEditingController();
   var gender;
-
-   
-  
   var dateController = TextEditingController();
-class _EnrollmentState extends State<Enrollment> {
- 
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +198,17 @@ class _EnrollmentState extends State<Enrollment> {
                 ElevatedButton(
                     onPressed: () async {
                       Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return const CoursePage();
+                        return  CoursePage(
+                          fnamecontroller: fnamecontroller.text,
+                          lnamecontroller: lnamecontroller.text,
+
+                          addresscontroller:addresscontroller.text ,
+                          dateController: dateController.text,
+                          religioncontroller: religioncontroller.text,
+                          nationalitycontroller: nationalitycontroller.text,
+                          gender: gender,
+
+                        );
                       }));
                      
                     },
@@ -219,37 +226,3 @@ class _EnrollmentState extends State<Enrollment> {
 
   
 }
-void ShowAlterDialogMessage(BuildContext context, String msg) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Enroll Confirmation'),
-        content: SizedBox(
-          height: 130,
-          child: Column(
-            children: [
-              const Divider(
-                color: Colors.grey,
-                thickness: 2,
-              ),
-              const SizedBox(height: 15),
-              Text(msg),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const Text('Close!')),
-            ],
-          ),
-        ),
-      ),
-      barrierDismissible: false,
-    );
-  }

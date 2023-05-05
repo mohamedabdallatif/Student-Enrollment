@@ -1,11 +1,29 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:sql_project/enroll.dart';
+import 'package:http/http.dart' as http;
 
 class CoursePage extends StatefulWidget {
-  const CoursePage({super.key});
+   var fnamecontroller ;
+    var lnamecontroller ;
+  var addresscontroller;
+  var religioncontroller ;
+  var nationalitycontroller;
+  var gender;
+  var dateController ;
+
+   CoursePage({
+    Key? key,
+    required this.fnamecontroller,
+    required this.lnamecontroller,
+    required this.addresscontroller,
+    required this.religioncontroller,
+    required this.nationalitycontroller,
+    required this.gender,
+    required this.dateController
+  }) : super(key: key);
+  
 
   @override
   State<CoursePage> createState() => _CoursePageState();
@@ -20,7 +38,7 @@ class _CoursePageState extends State<CoursePage> {
   Future insertStudent(String fname, String lname, String date, String Address,
       String religion, String nationality, String gender,List list) async {
         Map data= {
-    'fname': fname,
+        'fname': fname,
         'lname': lname,
         'date': date,
         'Address': Address,
@@ -71,13 +89,13 @@ class _CoursePageState extends State<CoursePage> {
             ),
             ElevatedButton(onPressed: ()async{
                final result = await insertStudent(
-                          fnamecontroller.text,
-                          lnamecontroller.text,
-                          dateController.text,
-                          addresscontroller.text,
-                          religioncontroller.text,
-                          nationalitycontroller.text,
-                          gender,
+                          widget.fnamecontroller,
+                          widget.lnamecontroller,
+                          widget.dateController,
+                          widget.addresscontroller,
+                          widget.religioncontroller,
+                          widget.nationalitycontroller,
+                          widget.gender,
                           selectedCourses);
                       if (result.statusCode == 200) {
                         final responseData = json.decode(result.body);
@@ -95,3 +113,37 @@ class _CoursePageState extends State<CoursePage> {
         ));
   }
 }
+void ShowAlterDialogMessage(BuildContext context, String msg) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Enroll Confirmation'),
+        content: SizedBox(
+          height: 130,
+          child: Column(
+            children: [
+              const Divider(
+                color: Colors.grey,
+                thickness: 2,
+              ),
+              const SizedBox(height: 15),
+              Text(msg),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Text('Close!')),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+  }
