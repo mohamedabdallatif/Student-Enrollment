@@ -74,12 +74,28 @@ class _StudentDataState extends State<StudentData> {
                               title: Text(
                                   "${dataresult![index]['First_Name']} ${dataresult![index]['Last_Name']}"),
                               subtitle: Text(dataresult![index]['Address']),
-                              trailing:IconButton(icon:const Icon(Icons.edit)
-                               ,onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context){
-                                  return StudentDataView(data: dataresult![index]);
-                                }));
-                              },) ,
+                              trailing:Expanded(
+                                child: Container(
+                                  width: 100,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                        IconButton(icon:const Icon(Icons.edit)
+                                       ,onPressed: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                                          return StudentDataView(data: dataresult![index]);
+                                        }));
+                                      },),
+                                      IconButton(icon:const Icon(Icons.delete)
+                                       ,onPressed: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                                          return StudentDataView(data: dataresult![index]);
+                                        }));
+                                      },),
+                                    ],
+                                  ),
+                                ),
+                              ) ,
                               onTap: () {
                                 Navigator.push(
                                     context,
