@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sql_project/enroll.dart';
 import 'package:sql_project/home.dart';
 import 'package:sql_project/select.dart';
-import 'package:sql_project/update.dart';
 
 void main() => runApp(const StudentApp());
 

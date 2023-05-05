@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sql_project/student_detials.dart';
 import 'package:sql_project/student_view.dart';
 
 class StudentData extends StatefulWidget {
@@ -73,13 +74,18 @@ class _StudentDataState extends State<StudentData> {
                               title: Text(
                                   "${dataresult![index]['First_Name']} ${dataresult![index]['Last_Name']}"),
                               subtitle: Text(dataresult![index]['Address']),
-                              trailing: Text(dataresult![index]['Date_Of_Birth']),
+                              trailing:IconButton(icon:const Icon(Icons.edit)
+                               ,onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  return StudentDataView(data: dataresult![index]);
+                                }));
+                              },) ,
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          StudentDataView(data: dataresult![index]),
+                                          StudentDetials(element: dataresult![index]),
                                     ));
                               },
                             ),
