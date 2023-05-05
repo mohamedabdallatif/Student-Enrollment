@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
              style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.teal,
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 )),
@@ -45,12 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
            style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.teal,
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 )),
              child:const Text('Search for a Student',
-             style: TextStyle(fontSize: 16.0),
+             style: TextStyle(fontSize: 18.0),
              )
               ),
           ],
