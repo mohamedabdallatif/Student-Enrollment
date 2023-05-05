@@ -18,7 +18,7 @@ class StudentData extends StatefulWidget {
 }
 
 int resStatusVal = 0;
-var url = 'https://studentssqlserver123.000webhostapp.com/select.php';
+var selectUrl = 'https://studentssqlserver123.000webhostapp.com/select.php';
 
 class _StudentDataState extends State<StudentData> {
   List? dataresult;
@@ -31,12 +31,11 @@ class _StudentDataState extends State<StudentData> {
   }
 
   Future<void> sendSelectStatement(var selectStatement, var val) async {
-    final response = (await http.post(Uri.parse(url), body: {
+    final response = await http.post(Uri.parse(selectUrl), body: {
       'selectStatement': selectStatement,
       'val': val,
-    }));
+    });
     final resbody = json.decode(response.body);
-    // print(resbody.toString());
     if (response.statusCode == 200) {
       setState(() {
         resStatusVal = 1;
@@ -47,6 +46,14 @@ class _StudentDataState extends State<StudentData> {
       });
     }
     dataresult = resbody;
+  }
+
+  var deleteUrl = 'https://studentssqlserver123.000webhostapp.com/delete.php';
+  Future<int> deleteStudent(int id) async {
+    final response =
+        await http.post(Uri.parse(deleteUrl), body: {'id': id.toString()});
+    final resbody = json.decode(response.body);
+    return response.statusCode;
   }
 
   @override
@@ -61,8 +68,7 @@ class _StudentDataState extends State<StudentData> {
           child: resStatusVal == 0
               ? const Center(child: CircularProgressIndicator())
               : resStatusVal == 2
-                  ? showAlterDialogMessage(
-                      context, 'This Student is not Enrolled')
+                  ? AlterDialogMessage(context, 'This Student is not Enrolled')
                   : ListView.builder(
                       itemCount: dataresult!.length,
                       itemBuilder: (context, index) {
@@ -70,42 +76,63 @@ class _StudentDataState extends State<StudentData> {
                           children: [
                             ListTile(
                               tileColor: Colors.teal[300],
-                              leading: const Icon(Icons.person, size: 30,),
+                              leading: const Icon(
+                                Icons.person,
+                                size: 30,
+                              ),
                               title: Text(
                                   "${dataresult![index]['First_Name']} ${dataresult![index]['Last_Name']}"),
                               subtitle: Text(dataresult![index]['Address']),
-                              trailing:Expanded(
-                                child: Container(
-                                  width: 100,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                        IconButton(icon:const Icon(Icons.edit)
-                                       ,onPressed: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                                          return StudentDataView(data: dataresult![index]);
+                              trailing: Container(
+                                width: 100,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return StudentDataView(
+                                              data: dataresult![index]);
                                         }));
-                                      },),
-                                      IconButton(icon:const Icon(Icons.delete)
-                                       ,onPressed: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                                          return StudentDataView(data: dataresult![index]);
-                                        }));
-                                      },),
-                                    ],
-                                  ),
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: () async {
+                                        int res = await deleteStudent(
+                                            dataresult![index]['Id']);
+                                        String resmsg;
+                                        if (res == 200)
+                                          resmsg =
+                                              'Student Deleted Successfully';
+                                        else
+                                          resmsg = 'Oops! Error within Deleting';
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                AlterDialogMessage(
+                                                    context, resmsg)
+                                                );
+                                      },
+                                    ),
+                                  ],
                                 ),
-                              ) ,
+                              ),
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          StudentDetials(element: dataresult![index]),
+                                      builder: (context) => StudentDetials(
+                                          element: dataresult![index]),
                                     ));
                               },
                             ),
-                            const SizedBox(height: 20,)
+                            const SizedBox(
+                              height: 20,
+                            )
                           ],
                         );
                       },
@@ -113,7 +140,7 @@ class _StudentDataState extends State<StudentData> {
         ));
   }
 
-  Widget showAlterDialogMessage(BuildContext context, String msg) {
+  Widget AlterDialogMessage(BuildContext context, String msg) {
     return AlertDialog(
       title: const Text('Searching Result'),
       content: SizedBox(
