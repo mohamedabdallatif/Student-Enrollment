@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.teal)
              ),
-             child:const Text('Update Student')
+             child:const Text('Find Student')
               ),
           ],
         ),
