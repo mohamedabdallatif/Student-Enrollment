@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class UpdatePage extends StatefulWidget {
 var element;
@@ -17,6 +18,31 @@ class _UpdatePageState extends State<UpdatePage> {
   @override
   Widget build(BuildContext context) {
       var gender='${widget.element['Gender']}';
+      var fnamecontroller;
+  var lnamecontroller ;
+  var addresscontroller ;
+  var religioncontroller ;
+  var nationalitycontroller ;
+    var dateController ;
+    var insertUrl = 'https://studentssqlserver123.000webhostapp.com/update.php';
+
+  Future updateStudent(int Id,String fname, String lname, String date, String Address,
+      String religion, String nationality, String gender) async {
+    final response = await http.post(
+      Uri.parse(insertUrl),
+      body: {
+        'Id':Id,
+        'fname': fname,
+        'lname': lname,
+        'date': date,
+        'Address': Address,
+        'religion': religion,
+        'nationality': nationality,
+        'gender': gender,
+      },
+    );
+    return response;
+  }
     return  Scaffold(
       appBar: AppBar(
         title: const Text('Update student'),
@@ -37,7 +63,10 @@ class _UpdatePageState extends State<UpdatePage> {
                   height: 15,
                 ),
                 TextFormField(
-                  initialValue: '${widget.element['First_Name']}',
+                  initialValue:'${widget.element['First_Name']}',
+                  onSaved: (newValue) {
+                    fnamecontroller =newValue;
+                  },
                 //  controller: fnamecontroller,
                   decoration: const InputDecoration(
                       label: Text('First name'),
@@ -58,7 +87,9 @@ class _UpdatePageState extends State<UpdatePage> {
                 ),
                 TextFormField(
                    initialValue: '${widget.element['Last_Name']}',
-                //  controller: lnamecontroller,
+                    onSaved: (newValue) {
+                    lnamecontroller =newValue;
+                  },
                   decoration: const InputDecoration(
                       label: Text('Last name'),
                       prefixIcon: Icon(Icons.person),
@@ -78,7 +109,10 @@ class _UpdatePageState extends State<UpdatePage> {
                 ),
                 TextFormField(
                    initialValue: '${widget.element['Date_Of_Birth']}',
-                 // controller: dateController,
+                    onSaved: (newValue) {
+                    dateController =newValue;
+                  },
+                  controller: dateController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Date Of Birth can\'t br empty';
@@ -92,7 +126,7 @@ class _UpdatePageState extends State<UpdatePage> {
                             firstDate: DateTime.utc(1900),
                             lastDate: DateTime.now())
                         .then((value) {
-                   //   dateController.text = value!.toIso8601String();
+                      dateController = value!.toIso8601String();
                     });
                   },
                   keyboardType: TextInputType.none,
@@ -105,8 +139,11 @@ class _UpdatePageState extends State<UpdatePage> {
                   height: 10,
                 ),
                 TextFormField(
+                   onSaved: (newValue) {
+                    addresscontroller =newValue;
+                  },
                    initialValue: '${widget.element['Address']}',
-                //  controller: addresscontroller,
+                  controller: addresscontroller,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       label: Text('Address'),
@@ -127,7 +164,10 @@ class _UpdatePageState extends State<UpdatePage> {
                 ),
                 TextFormField(
                    initialValue: '${widget.element['Religion']}',
-                 // controller: religioncontroller,
+                    onSaved: (newValue) {
+                    religioncontroller =newValue;
+                  },
+                  controller: religioncontroller,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       label: Text('Religion'),
@@ -147,8 +187,11 @@ class _UpdatePageState extends State<UpdatePage> {
                   height: 10,
                 ),
                 TextFormField(
-                   initialValue: '${widget.element['Nationality']}',                  
-              //    controller: nationalitycontroller,
+                   initialValue: '${widget.element['Nationality']}',  
+                    onSaved: (newValue) {
+                    nationalitycontroller =newValue;
+                  },                
+                  controller: nationalitycontroller,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       label: Text('Nationality'),
@@ -195,6 +238,17 @@ class _UpdatePageState extends State<UpdatePage> {
                         gender = value!;
                       });
                     }),
+                    ElevatedButton(onPressed:()async{
+                      await updateStudent(widget.element['Id'],
+                      fnamecontroller?fnamecontroller:widget.element['First_name'],
+                       lnamecontroller?lnamecontroller:widget.element['Last_name'],
+                        dateController?dateController:widget.element['Date_Of_Birth'],
+                        addresscontroller?addresscontroller:widget.element['Address'],
+                         religioncontroller?religioncontroller:widget.element['Religion'],
+                         nationalitycontroller?nationalitycontroller:widget.element['Nationality'],
+                          gender);
+                    } ,
+                     child: const Text('Update'))
               ],
             ),
           ),
