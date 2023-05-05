@@ -47,15 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.teal)
              ),
-             child:const Text('Select Student')
+             child:const Text('Update Student')
               ),
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).pushNamed('update');
-              },
-              style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.teal)
-             ),
-               child: const Text('Update Student'))
           ],
         ),
       ) ,
