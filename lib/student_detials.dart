@@ -35,7 +35,7 @@ class _StudentDetialsState extends State<StudentDetials> {
         fontWeight: FontWeight.w200,
       ),
       ) ,
-       Text('Phone: ${widget.element['Phone']}',
+       Text('Date of Birth: ${widget.element['Date_Of_Birth']}',
         style: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w200,
@@ -47,6 +47,7 @@ class _StudentDetialsState extends State<StudentDetials> {
         fontWeight: FontWeight.bold,
           ),
           ),
+          Text('Courses:${widget.element['courses'][1]}')
         ],
       )
     );

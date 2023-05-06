@@ -48,6 +48,7 @@ class _SelectionPageState extends State<SelectionPage> {
                     'Last_Name',
                     'Address',
                     'Nationality',
+                    'Gender'
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

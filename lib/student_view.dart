@@ -58,6 +58,7 @@ class _StudentDataViewState extends State<StudentDataView> {
         title: const Text('Student Data'),
         centerTitle: true,
         backgroundColor: Colors.teal,
+       
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -241,7 +242,7 @@ class _StudentDataViewState extends State<StudentDataView> {
                         final responseData = json.decode(result.body);
                         if (responseData['status'] == 'success') {
                           showAlterDialogMessage(
-                              context, 'Student Is Inserted Successfully');
+                              context, 'Student Is Updated Successfully');
                         } else {
                           showAlterDialogMessage(context,
                               'Error ${result.statusCode} ${result.reasonPhrase}');
@@ -254,6 +255,7 @@ class _StudentDataViewState extends State<StudentDataView> {
                     child: const Text('Update'))
               ],
             ),
+            
           ),
         ),
       ),

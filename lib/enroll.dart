@@ -213,7 +213,7 @@ class _EnrollmentState extends State<Enrollment> {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.teal)),
-                    child: const Text('Enroll'))
+                    child: const Text('Next'))
               ],
             ),
           ),
