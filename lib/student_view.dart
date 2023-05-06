@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:sql_project/course_view.dart';
 
 class StudentDataView extends StatefulWidget {
   StudentDataView({Key? key, required this.data}) : super(key: key);
@@ -227,32 +227,27 @@ class _StudentDataViewState extends State<StudentDataView> {
                       });
                     }),
                 ElevatedButton(
-                    onPressed: () async {
-                      final result = await updateStudent(
-                        fnamecontroller.text,
-                        lnamecontroller.text,
-                        dateController.text,
-                        addresscontroller.text,
-                        religioncontroller.text,
-                        nationalitycontroller.text,
-                        gender,
-                        widget.data['Id'].toString(),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder:
+                                  (context) => CourseView(
+                                    fname: fnamecontroller.text,
+                                    lname: lnamecontroller.text,
+                                    address: addresscontroller.text,
+                                    birthdate: dateController.text,
+                                    gender: gender,
+                                    nationality: nationalitycontroller.text,
+                                    religion: religioncontroller.text,
+                                  ),
+                          )
                       );
-                      if (result.statusCode == 200) {
-                        final responseData = json.decode(result.body);
-                        if (responseData['status'] == 'success') {
-                          showAlterDialogMessage(
-                              context, 'Student Is Updated Successfully');
-                        } else {
-                          showAlterDialogMessage(context,
-                              'Error ${result.statusCode} ${result.reasonPhrase}');
-                        }
-                      }
                     },
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.teal)),
-                    child: const Text('Update'))
+                    child: const Text('Update Courses'))
               ],
             ),
             
