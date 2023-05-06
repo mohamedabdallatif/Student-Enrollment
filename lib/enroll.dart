@@ -1,6 +1,5 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:sql_project/courses_page.dart';
 
@@ -22,6 +21,7 @@ class _EnrollmentState extends State<Enrollment> {
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Enroll Student'),
@@ -32,6 +32,7 @@ class _EnrollmentState extends State<Enrollment> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
+            key: formKey,
             child: Column(
               children: [
                 const Text(
@@ -56,6 +57,8 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  /* textInputAction: TextInputAction.values[8], // set to accept Arabic text
+                  style: GoogleFonts.cairo(), */
                 ),
                 const SizedBox(
                   height: 10,
@@ -196,19 +199,25 @@ class _EnrollmentState extends State<Enrollment> {
                     }),
                 ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return  CoursePage(
-                          fnamecontroller: fnamecontroller.text,
-                          lnamecontroller: lnamecontroller.text,
-                          addresscontroller:addresscontroller.text ,
-                          dateController: dateController.text,
-                          religioncontroller: religioncontroller.text,
-                          nationalitycontroller: nationalitycontroller.text,
-                          gender: gender,
-
-                        );
-                      }));
-                     
+                      if (formKey.currentState!.validate()) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CoursePage(
+                            fnamecontroller: fnamecontroller.text,
+                            lnamecontroller: lnamecontroller.text,
+                            addresscontroller: addresscontroller.text,
+                            dateController: dateController.text,
+                            religioncontroller: religioncontroller.text,
+                            nationalitycontroller: nationalitycontroller.text,
+                            gender: gender,
+                          );
+                        }));
+                     }
+                      else if(gender==null){
+                        AwesomeDialog(context: context,
+                        title: 'Complete Data'
+                        ).show();
+                      }
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -221,6 +230,4 @@ class _EnrollmentState extends State<Enrollment> {
       ),
     );
   }
-
-  
 }

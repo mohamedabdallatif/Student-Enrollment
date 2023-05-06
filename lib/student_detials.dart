@@ -13,43 +13,66 @@ class StudentDetials extends StatefulWidget {
 }
 
 class _StudentDetialsState extends State<StudentDetials> {
-  
+
   @override
   Widget build(BuildContext context) {
+  //  String courses = widget.element['Course_Name'].substring(1,widget.element['Course_Name'].length()-1);
+    List<String> coursesList = widget.element['Course_Name'].split(",");
     return Scaffold(
       appBar: AppBar(
         title: Text('ID ${widget.element['Id']}\'s Detials'),
         backgroundColor: Colors.teal,
       ),
-      body:Column(
-        children: [
-          const Text('Student\'s Detials',
-          style: TextStyle(
-            fontSize: 25,
-        fontWeight: FontWeight.bold,
-          ),
-          ),
-          Text('Name: ${widget.element['First_Name']} ${widget.element['Last_Name']}',
-        style: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w200,
+      body:SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Name: ${widget.element['First_Name']} ${widget.element['Last_Name']}',
+              style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              'Date of Birth: ${widget.element['Date_Of_Birth']}',
+              style: const TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 32.0),
+            Text(
+              'Address: ${widget.element['Address']}',
+              style: const TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 32.0),
+            Text(
+              'Religion: ${widget.element['Religion']}',
+              style: const TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 32.0),
+             Text(
+              'Nationality: ${widget.element['Nationality']}',
+              style: const TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 32.0),
+            
+            const Text(
+              'Courses:',
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16.0),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: coursesList.length,
+              itemBuilder: (context, index) {
+                return Text(
+                  '${index + 1}. ${coursesList[index]}',
+                  style: const TextStyle(fontSize: 18.0),
+                );
+              },
+            ),
+          ],
+        ),
       ),
-      ) ,
-       Text('Date of Birth: ${widget.element['Date_Of_Birth']}',
-        style: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w200,
-      ),
-      ) ,
-      const Text('Courses\'s Detials',
-          style: TextStyle(
-            fontSize: 25,
-        fontWeight: FontWeight.bold,
-          ),
-          ),
-          Text('Courses:${widget.element['courses'][1]}')
-        ],
-      )
     );
+    
   }
 }
