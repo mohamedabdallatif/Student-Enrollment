@@ -61,6 +61,7 @@ class _StudentDataState extends State<StudentData> {
           backgroundColor: Colors.teal,
            actions: [
           PopupMenuButton(
+            icon: const Icon(Icons.sort),
             onSelected: (value){
                 setState(() {
                   mysort = value;
