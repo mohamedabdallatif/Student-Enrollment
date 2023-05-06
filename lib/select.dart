@@ -66,14 +66,13 @@ class _SelectionPageState extends State<SelectionPage> {
                     prefixIcon: Icon(Icons.search),
                   ),
                   validator: (value) {
-                    if (selectedOption != 'all') {
                       if (value!.length > 100) {
                         return 'Input can\'t be greater than 100';
                       }
-                      if (value.isEmpty) {
-                        return 'Input can\'t be lesser than 2';
+                      if (value.length <2) {
+                        return 'Input can\'t be less than 2';
                       }
-                    }
+                    
                     return null;
                   },
                 ),
@@ -83,14 +82,16 @@ class _SelectionPageState extends State<SelectionPage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    formKey.currentState!.validate();
-                    Navigator.push(
+                    if(formKey.currentState!.validate()){
+                       Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => StudentData(
                             val: searchController.text, option: selectedOption),
                       ),
                     );
+                    }
+                   
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,

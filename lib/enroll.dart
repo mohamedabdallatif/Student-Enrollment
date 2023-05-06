@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:sql_project/courses_page.dart';
 
@@ -53,12 +52,10 @@ class _EnrollmentState extends State<Enrollment> {
                       return 'First name can\'t be greater than 100';
                     }
                     if (value.length < 2) {
-                      return 'First name can\'t be lesser than 2';
+                      return 'First name can\'t be less than 2';
                     }
                     return null;
                   },
-                  /* textInputAction: TextInputAction.values[8], // set to accept Arabic text
-                  style: GoogleFonts.cairo(), */
                 ),
                 const SizedBox(
                   height: 10,
@@ -74,7 +71,7 @@ class _EnrollmentState extends State<Enrollment> {
                       return 'Last name can\'t be greater than 100';
                     }
                     if (value.length < 2) {
-                      return 'Last name can\'t be lesser than 2';
+                      return 'Last name can\'t be less than 2';
                     }
                     return null;
                   },
@@ -86,7 +83,7 @@ class _EnrollmentState extends State<Enrollment> {
                   controller: dateController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Date Of Birth can\'t br empty';
+                      return 'Date Of Birth can\'t be empty';
                     }
                     return null;
                   },
@@ -121,7 +118,7 @@ class _EnrollmentState extends State<Enrollment> {
                       return 'Address can\'t be greater than 100';
                     }
                     if (value.length < 2) {
-                      return 'Address can\'t be lesser than 2';
+                      return 'Address can\'t be less than 2';
                     }
                     return null;
                   },
@@ -141,7 +138,7 @@ class _EnrollmentState extends State<Enrollment> {
                       return 'Religion can\'t be greater than 100';
                     }
                     if (value.length < 2) {
-                      return 'Religion can\'t be lesser than 2';
+                      return 'Religion can\'t be less than 2';
                     }
                     return null;
                   },
@@ -161,7 +158,7 @@ class _EnrollmentState extends State<Enrollment> {
                       return 'Nationality can\'t be greater than 100';
                     }
                     if (value.length < 2) {
-                      return 'Nationality can\'t be lesser than 2';
+                      return 'Nationality can\'t be less than 2';
                     }
                     return null;
                   },
