@@ -4,25 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 class CourseView extends StatefulWidget {
-  var fname;
-  var lname;
-  var address;
-  var religion;
-  var nationality;
-  var gender;
-  var birthdate;
+  Map<String, dynamic> curstd;
 
-  CourseView(
-  {
-    Key? key,
-    this.fname,
-    this.lname,
-    this.address,
-    this.nationality,
-    this.religion,
-    this.birthdate,
-    this.gender
-  }): super(key: key);
+  CourseView({Key? key, required this.curstd}) : super(key: key);
 
   @override
   State<CourseView> createState() => _CourseViewState();
@@ -30,10 +14,10 @@ class CourseView extends StatefulWidget {
 
 class _CourseViewState extends State<CourseView> {
   List courses = ['Arabic', 'English', 'C', 'Java'];
-  List selectedCourses = [];
   List isClicked = [false, false, false, false];
+  List<String> selectedCourses = [];
   var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
-
+  // List<String> coursesList = widget.element['Course_Name'].split(",");
   // Future insertStudent(String fname, String lname, String date, String Address,
   //     String religion, String nationality, String gender, List list) async {
   //   final response = await http.post(Uri.parse(insertUrl), body: {
@@ -48,6 +32,20 @@ class _CourseViewState extends State<CourseView> {
   //   });
   //   return response;
   // }
+
+  @override
+  void initState() {
+    selectedCourses = widget.curstd['Course_Name'].split(",");
+    print(selectedCourses);
+    // for (int i = 0; i < courses.length; i++) {
+    //   if (widget.courselist!.contains(courses[i])) {
+    //     isClicked[i] = true;
+    //     selectedCourses.add(courses[i]);
+    //   }
+    // }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,9 +135,7 @@ class _CourseViewState extends State<CourseView> {
                 },
                 child: const Text('Enroll'))
           ],
-        )
-    );
-
+        ));
   }
 }
 
