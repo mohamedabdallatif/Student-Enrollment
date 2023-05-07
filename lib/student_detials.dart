@@ -16,8 +16,13 @@ class _StudentDetialsState extends State<StudentDetials> {
 
   @override
   Widget build(BuildContext context) {
-  //  String courses = widget.element['Course_Name'].substring(1,widget.element['Course_Name'].length()-1);
     List<String> coursesList = widget.element['Course_Name'].split(",");
+    String f = coursesList.first;
+    f = f.substring(1);
+    coursesList.first = f;
+    f = coursesList.last;
+    f = f.substring(0, f.length - 1);
+    coursesList.last = f;
     return Scaffold(
       appBar: AppBar(
         title: Text('ID ${widget.element['Id']}\'s Detials'),

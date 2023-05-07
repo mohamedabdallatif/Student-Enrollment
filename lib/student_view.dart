@@ -18,11 +18,20 @@ class _StudentDataViewState extends State<StudentDataView> {
   var nationalitycontroller = TextEditingController();
   var dateController = TextEditingController();
   var gender;
+  List? clist;
 
   var updateUrl = 'https://studentssqlserver123.000webhostapp.com/update.php';
 
-  Future updateStudent(String fname, String lname, String date, String Address,
-      String religion, String nationality, String gender, String id) async {
+  Future updateStudent(
+      String fname,
+      String lname,
+      String date,
+      String Address,
+      String religion,
+      String nationality,
+      String gender,
+      String id,
+      List courselist) async {
     final response = await http.post(
       Uri.parse(updateUrl),
       body: {
@@ -34,6 +43,7 @@ class _StudentDataViewState extends State<StudentDataView> {
         'nationality': nationality,
         'gender': gender,
         'id': id,
+        'clist': courselist,
       },
     );
     return response;
@@ -48,6 +58,13 @@ class _StudentDataViewState extends State<StudentDataView> {
     nationalitycontroller.text = widget.data['Nationality'];
     dateController.text = widget.data['Date_Of_Birth'];
     gender = widget.data['Gender'];
+    clist = widget.data['courselist'].split(",");
+    String f = clist!.first;
+    f = f.substring(1);
+    clist!.first = f;
+    f = clist!.last;
+    f = f.substring(0, f.length - 1);
+    clist!.last = f;
     super.initState();
   }
 
@@ -58,7 +75,6 @@ class _StudentDataViewState extends State<StudentDataView> {
         title: const Text('Student Data'),
         centerTitle: true,
         backgroundColor: Colors.teal,
-       
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -237,18 +253,10 @@ class _StudentDataViewState extends State<StudentDataView> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder:
-                                  (context) => CourseView(
-                                    fname: fnamecontroller.text,
-                                    lname: lnamecontroller.text,
-                                    address: addresscontroller.text,
-                                    birthdate: dateController.text,
-                                    gender: gender,
-                                    nationality: nationalitycontroller.text,
-                                    religion: religioncontroller.text,
-                                  ),
-                          )
-                      );
+                            builder: (context) => CourseView(
+                              curstd: widget.data,
+                            ),
+                          ));
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -256,7 +264,6 @@ class _StudentDataViewState extends State<StudentDataView> {
                     child: const Text('Update Courses'))
               ],
             ),
-            
           ),
         ),
       ),

@@ -157,8 +157,8 @@ class _StudentDataState extends State<StudentData> {
 
             return const Center(
               child: Text(
-                  'No Data !',
-                  style: TextStyle(fontSize: 28),
+                'No Data !',
+                style: TextStyle(fontSize: 28),
               ),
             );
           },
