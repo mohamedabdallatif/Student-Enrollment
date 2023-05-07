@@ -58,18 +58,18 @@ class _StudentDataViewState extends State<StudentDataView> {
     nationalitycontroller.text = widget.data['Nationality'];
     dateController.text = widget.data['Date_Of_Birth'];
     gender = widget.data['Gender'];
-    clist = widget.data['courselist'].split(",");
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    clist = widget.data['Course_Name'].split(",");
     String f = clist!.first;
     f = f.substring(1);
     clist!.first = f;
     f = clist!.last;
     f = f.substring(0, f.length - 1);
     clist!.last = f;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student Data'),
