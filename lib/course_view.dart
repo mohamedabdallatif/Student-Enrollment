@@ -19,10 +19,18 @@ class _CourseViewState extends State<CourseView> {
 
   var updateUrl = 'https://studentssqlserver123.000webhostapp.com/update.php';
 
-  Future updateStudent(int id, String fname, String lname, String date, String address,
-      String religion, String nationality, String gender, List list) async {
+  Future updateStudent(
+      int id,
+      String fname,
+      String lname,
+      String date,
+      String address,
+      String religion,
+      String nationality,
+      String gender,
+      List list) async {
     final response = await http.post(Uri.parse(updateUrl), body: {
-      'id': id,
+      'id': id.toString(),
       'fname': fname,
       'lname': lname,
       'date': date,
@@ -69,7 +77,7 @@ class _CourseViewState extends State<CourseView> {
                   itemCount: courses.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text('${courses[index]}'),
+                      title: Text(courses[index]),
                       trailing: Checkbox(
                         onChanged: (bool? value) {
                           setState(() {
@@ -78,7 +86,11 @@ class _CourseViewState extends State<CourseView> {
                               if (!selectedCourses.contains(courses[index])) {
                                 selectedCourses.add(courses[index]);
                               }
-                              print(selectedCourses);
+                            } else {
+                              int idx = selectedCourses.indexOf(courses[index]);
+                              if (idx != -1) {
+                                selectedCourses.removeAt(idx);
+                              }
                             }
                           });
                         },
@@ -88,9 +100,9 @@ class _CourseViewState extends State<CourseView> {
                   }),
             ),
             ElevatedButton(
-                onPressed: () async{
+                onPressed: () async {
+                  // print(selectedCourses);
                   if (isClicked.any((element) => element == true)) {
-                    
                     final result = await updateStudent(
                         widget.curstd['Id'],
                         widget.curstd['First_Name'],
@@ -105,33 +117,34 @@ class _CourseViewState extends State<CourseView> {
                     if (result.statusCode == 200) {
                       final responseData = json.decode(result.body);
                       if (responseData['status'] == 'success') {
+                        setState((){});
                         AwesomeDialog(
                             context: context,
-                            title: 'Student Is Inserted Successfully',
+                            title: 'Student Is Updated Successfully',
                             body: Center(
                                 child: Column(
-                                  children: [
-                                    const Divider(
-                                      color: Colors.grey,
-                                      thickness: 2,
+                              children: [
+                                const Divider(
+                                  color: Colors.grey,
+                                  thickness: 2,
+                                ),
+                                const SizedBox(height: 15),
+                                const Text('Student Is Updated Successfully'),
+                                const SizedBox(height: 10),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
                                     ),
-                                    const SizedBox(height: 15),
-                                    Text('Student Is Inserted Successfully'),
-                                    const SizedBox(height: 10),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(30),
-                                          ),
-                                        ),
-                                        child: const Text('Close!')),
-                                  ],
-                                ))).show();
+                                    child: const Text('Close!')),
+                              ],
+                            ))).show();
                       } else {
                         ShowAlterDialogMessage(context,
                             'Error ${result.statusCode} ${result.reasonPhrase}');
@@ -139,12 +152,15 @@ class _CourseViewState extends State<CourseView> {
                     }
                   } else {
                     AwesomeDialog(
-                        context: context,
-                        title: 'please choose any courses')
+                            context: context,
+                            title: 'please choose any courses')
                         .show();
                   }
                 },
-                child: const Text('Enroll'))
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                ),
+                child: const Text('Update'))
           ],
         ));
   }

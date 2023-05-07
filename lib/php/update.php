@@ -16,7 +16,7 @@ $gender = $_POST['gender'] ?? null;
 $clist = $_POST['list'] ?? null;
 
 // Prepare the SQL statement with placeholders for the data
-$sql = "UPDATE test SET First_name=?, Last_name=?,Date_Of_Birth=?,Address=?,Religion=?,Nationality=?, gender=? WHERE id=?";
+$sql = "UPDATE test SET First_name=?, Last_name=?,Date_Of_Birth=?,Address=?,Religion=?,Nationality=?, gender=? WHERE Id=?";
 
 // Prepare the statement
 $stmt = mysqli_prepare($conn, $sql);
@@ -26,7 +26,7 @@ mysqli_stmt_bind_param($stmt, "sssssssi", $fname, $lname,$dateString->format('Y-
 
 $result = $stmt->execute();
 
-$sql = "UPDATE mycourses SET Course_Name=? WHERE id=?";
+$sql = "UPDATE mycourses SET Course_Name=? WHERE Student_Id=?";
 
 // Prepare the statement
 $stmt = mysqli_prepare($conn, $sql);
