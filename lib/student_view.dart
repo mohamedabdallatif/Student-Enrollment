@@ -18,7 +18,6 @@ class _StudentDataViewState extends State<StudentDataView> {
   var nationalitycontroller = TextEditingController();
   var dateController = TextEditingController();
   var gender;
-  List? clist;
 
   var updateUrl = 'https://studentssqlserver123.000webhostapp.com/update.php';
 
@@ -63,13 +62,6 @@ class _StudentDataViewState extends State<StudentDataView> {
 
   @override
   Widget build(BuildContext context) {
-    clist = widget.data['Course_Name'].split(",");
-    String f = clist!.first;
-    f = f.substring(1);
-    clist!.first = f;
-    f = clist!.last;
-    f = f.substring(0, f.length - 1);
-    clist!.last = f;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student Data'),
@@ -254,7 +246,17 @@ class _StudentDataViewState extends State<StudentDataView> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => CourseView(
-                              curstd: widget.data,
+                              curstd: {
+                                'Id': widget.data['Id'],
+                                'First_Name': fnamecontroller.text,
+                                'Last_Name': lnamecontroller.text,
+                                'Date_Of_Birth': dateController.text,
+                                'Address': addresscontroller.text,
+                                'Religion': religioncontroller.text,
+                                'Nationality': nationalitycontroller.text,
+                                'Gender': gender,
+                                'Course_Name': widget.data['Course_Name']
+                              },
                             ),
                           ));
                     },
