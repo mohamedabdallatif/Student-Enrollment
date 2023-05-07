@@ -36,8 +36,7 @@ if ($result) {
     'message' => 'Error Updating data'
   );
 }
-
-echo json_encode($response);
+echo json_encode($student_id);
 
 
 $stmt->close();
