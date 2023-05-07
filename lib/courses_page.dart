@@ -33,7 +33,7 @@ class _CoursePageState extends State<CoursePage> {
   List selectedCourses = [];
   List isClicked = [false, false, false, false];
   var insertUrl = 'https://studentssqlserver123.000webhostapp.com/insert.php';
-
+  var res;
   Future insertStudent(String fname, String lname, String date, String Address,
       String religion, String nationality, String gender, List list) async {
     final response = await http.post(Uri.parse(insertUrl), body: {
@@ -46,6 +46,7 @@ class _CoursePageState extends State<CoursePage> {
       'gender': gender,
       'list': list.toString(),
     });
+    res= jsonDecode(response.body);
     return response;
   }
 
@@ -94,7 +95,7 @@ class _CoursePageState extends State<CoursePage> {
                         selectedCourses);
                     if (result.statusCode == 200) {
                       final responseData = json.decode(result.body);
-                      if (responseData['status'] == 'success') {
+                      if (responseData!=null) {
                         print('Data inserted successfully');
                         AwesomeDialog(
                             context: context,
@@ -108,6 +109,7 @@ class _CoursePageState extends State<CoursePage> {
                                 ),
                                 const SizedBox(height: 15),
                                 Text('Student Is Inserted Successfully'),
+                                Text('Student Id is ${res.toString()}'),
                                 const SizedBox(height: 10),
                                 ElevatedButton(
                                     onPressed: () {

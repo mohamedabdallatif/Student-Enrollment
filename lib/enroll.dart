@@ -42,6 +42,7 @@ class _EnrollmentState extends State<Enrollment> {
                   height: 15,
                 ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: fnamecontroller,
                   decoration: const InputDecoration(
                       label: Text('First name'),
@@ -61,6 +62,7 @@ class _EnrollmentState extends State<Enrollment> {
                   height: 10,
                 ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: lnamecontroller,
                   decoration: const InputDecoration(
                       label: Text('Last name'),
@@ -80,6 +82,7 @@ class _EnrollmentState extends State<Enrollment> {
                   height: 10,
                 ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: dateController,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -122,6 +125,7 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(
                   height: 10,
@@ -142,6 +146,7 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(
                   height: 10,
@@ -162,6 +167,7 @@ class _EnrollmentState extends State<Enrollment> {
                     }
                     return null;
                   },
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(
                   height: 10,
