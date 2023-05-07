@@ -11,8 +11,8 @@ if (!$selectStatement || !$val ||!$sort) {
 
 $sql = "SELECT * FROM test
 INNER JOIN mycourses ON test.Id=mycourses.Student_Id
- WHERE $selectStatement = ?
-ORDER BY $sort";
+ WHERE test.$selectStatement = ?
+ORDER BY test.$sort";
 
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "s", $val);
