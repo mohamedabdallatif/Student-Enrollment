@@ -26,7 +26,7 @@ mysqli_stmt_bind_param($stmt, "sssssssi", $fname, $lname,$dateString->format('Y-
 
 $result = $stmt->execute();
 
-$sql = "UPDATE mycourses SET Course_Name=? WHERE Student_Id=?";
+$sql = "UPDATE mycourses SET First_Name=?, Last_Name=?, Course_Name=? WHERE Student_Id=?";
 
 // Prepare the statement
 $stmt = mysqli_prepare($conn, $sql);
