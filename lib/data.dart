@@ -17,24 +17,17 @@ class StudentData extends StatefulWidget {
   State<StudentData> createState() => _StudentDataState();
 }
 
-int resStatusVal = 0;
 var mysort = 'Id';
 var selectUrl = 'https://studentssqlserver123.000webhostapp.com/select.php';
 
 class _StudentDataState extends State<StudentData> {
   List? dataresult;
   List? sortresult;
-  @override
-  void initState() {
-    resStatusVal = 0;
-    // sendSelectStatement(widget.option, widget.val);
-    super.initState();
-  }
+  
 
   Future sendSelectStatement(var selectStatement, var val, var sort) async {
     final response = await http.post(Uri.parse(selectUrl),
         body: {'selectStatement': selectStatement, 'val': val, 'sort': sort});
-    // final resbody = json.decode(response.body);
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
@@ -46,7 +39,6 @@ class _StudentDataState extends State<StudentData> {
   Future<int> deleteStudent(int id) async {
     final response =
         await http.post(Uri.parse(deleteUrl), body: {'id': id.toString()});
-    // final resbody = json.decode(response.body);
     return response.statusCode;
   }
 
@@ -152,6 +144,14 @@ class _StudentDataState extends State<StudentData> {
                     },
                   ),
                 );
+              }
+              if(snapshot.hasError){
+                return const Center(
+              child: Text(
+                'Network Error !',
+                style: TextStyle(fontSize: 28),
+              ),
+            );
               }
             }
 
