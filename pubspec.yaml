@@ -5,23 +5,22 @@ version: 1.0.0+1
 environment:
   sdk: '>=2.19.0 <3.0.0'
 dependencies:
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
   intl: ^0.18.0
-  sql_conn: ^0.0.3
   http: ^0.13.6
   google_fonts: ^4.0.4
   awesome_dialog: ^3.0.2
 
 dev_dependencies:
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path: "dbphoto.png"
-  flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
