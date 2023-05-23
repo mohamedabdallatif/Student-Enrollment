@@ -1,4 +1,4 @@
-# Student Enrollment Application
+# Student Enrollment Application:
 
 The student enrollment project done with Flutter UI, PHP backend, and SQL database allows students to enroll and manage their personal information. 
 ## Getting Started
